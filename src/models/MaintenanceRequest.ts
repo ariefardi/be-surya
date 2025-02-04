@@ -66,8 +66,8 @@ export class MaintenanceRequest extends Model {
     @UpdatedAt
     updatedAt!: Date;
 
-    // Method to escalate urgency
     escalateUrgency(): void {
+        // better without burdening the db to need to update if the status changing.
         const now = new Date();
         const timeDiff = now.getTime() - this.createdAt.getTime();
 

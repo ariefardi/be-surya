@@ -46,7 +46,12 @@ export const resolvers = {
     // },
     Query: {
         requests: async () => {
-            const requests = await MaintenanceRequest.findAll();
+            const requests = await MaintenanceRequest.findAll({
+                order: [
+                    ["isResolved", "ASC"], // Sort false (0) first, then true (1)
+                    ["createdAt", "DESC"], // Optional: Sort by creation date as a secondary order
+                ],
+            });
             requests.forEach(request => request.escalateUrgency());
             return requests;
         },
