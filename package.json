@@ -4,7 +4,8 @@
     "description": "Simple starter template for ExpressJs and TypeScript based on expressjs/generator and TypeScript-Node-Starter",
     "main": "server.js",
     "scripts": {
-        "start": "npm run serve",
+        "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+        "start": "npm run build-ts && npm run serve",
         "build": "npm run build-ts",
         "serve": "node dist/server.js",
         "test": "jest --coverage=false --verbose",
@@ -25,10 +26,22 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@graphql-tools/merge": "^9.0.17",
+        "@graphql-tools/schema": "^10.0.16",
+        "@types/cors": "^2.8.17",
+        "cors": "^2.8.5",
         "express": "^4.16.2",
+        "express-graphql": "^0.12.0",
+        "graphql": "^16.10.0",
         "http-errors": "^1.7.1",
         "morgan": "^1.9.1",
-        "pug": "^3.0.1"
+        "pg": "^8.13.1",
+        "pug": "^3.0.1",
+        "reflect-metadata": "^0.2.2",
+        "sequelize": "^6.37.5",
+        "sequelize-typescript": "^2.1.6",
+        "ts-node-dev": "^2.0.0",
+        "validator": "^13.12.0"
     },
     "devDependencies": {
         "@types/express": "4.17.21",
