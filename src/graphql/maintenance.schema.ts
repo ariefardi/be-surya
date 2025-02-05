@@ -62,7 +62,7 @@ export const resolvers = {
         },
         openRequests: async () => {
             return MaintenanceRequest.count({
-                where: { isResolved: false }, // Count only unresolved requests
+                where: { isResolved: false },
             });
         },
         openUrgentRequests: async () => {
@@ -77,14 +77,13 @@ export const resolvers = {
         },
         averageResolutionTime: async () => {
             const resolvedRequests = await MaintenanceRequest.findAll({
-                where: { isResolved: true }, // Only include resolved requests
+                where: { isResolved: true },
             });
 
             if (resolvedRequests.length === 0) {
                 return 0; // No resolved requests, return 0
             }
 
-            // Calculate total resolution time in milliseconds
             const totalResolutionTime = resolvedRequests.reduce(
                 (sum, request) => {
                     if (request.resolvedAt && request.createdAt) {
@@ -99,7 +98,6 @@ export const resolvers = {
                 0,
             );
 
-            // Calculate average resolution time in hours
             const averageResolutionTimeMs =
                 totalResolutionTime / resolvedRequests.length;
             const averageResolutionTimeHours =
@@ -137,6 +135,7 @@ export const resolvers = {
                 title,
                 status,
                 isResolved,
+                description,
             }: {
                 id: number;
                 title?: string;
@@ -150,9 +149,9 @@ export const resolvers = {
 
             if (title) request.title = title;
             if (status) request.status = status;
-
-            // Update resolvedAt when isResolved changes to true
+            if (description) request.description = description;
             if (typeof isResolved !== "undefined") {
+                // Update resolvedAt when isResolved changes to true
                 request.isResolved = isResolved;
                 if (isResolved && !request.resolvedAt) {
                     request.resolvedAt = new Date(); // Set resolvedAt to current time
